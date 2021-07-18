@@ -41,6 +41,7 @@ def get_participants_id_list(event_url: str) -> IdList:
 
             another_page_url = another_page_url_base
 
+            # ページ巡回
             while True:
                 print(another_page_url)
                 r = requests.get(another_page_url)
@@ -84,7 +85,7 @@ def get_participants_id_list(event_url: str) -> IdList:
     return participants_id_list
 
 
-url = sys.args[1]
+url = sys.argv[1]
 
 
 participants_id_list = get_participants_id_list(url)
