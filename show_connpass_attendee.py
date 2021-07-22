@@ -1,3 +1,8 @@
+# connpassのイベント参加者のidを取得するスクリプト
+# 使い方: $ python show_connpass_attendee.py $1 [$2]
+# $1: connpassのイベントURL(例: https://mlops.connpass.com/event/218772/)
+# $2: 参加者idリストのファイル出力先。指定していない場合は$1のURLを整形してファイル名が作られる。
+
 import sys
 import time
 import re
@@ -98,10 +103,17 @@ def get_participants_id_list(event_url: str) -> IdList:
     return master_participants_id_list
 
 
-url = sys.argv[1]
+if __name__ == "__main__":
 
+    argvs = sys.argv
+    url = argvs[1]
+    if len(argvs) == 3:
+        output_txt = argvs[2]
+    else:
+        output_txt = url.replace("https://", "").replace("/", "_") + ".txt"
 
-participants_id_list = get_participants_id_list(url)
+    participants_id_list = get_participants_id_list(url)
 
-import pdb
-pdb.set_trace()
+    with open(output_txt, "w") as f:
+        for connpass_id in participants_id_list:
+            f.write(f"{connpass_id}\n")
