@@ -1,5 +1,5 @@
 # connpassのイベント参加者のTwitter idを取得するスクリプト。実行すると1行ごとにユーザidを格納したtxtファイルを生成する
-# 実行方法: $ python show_connpass_attendee.py [commpassのURL]
+# 実行方法: $ python show_connpass_attendee.py [connpassのURL]
 
 
 import sys
@@ -14,24 +14,24 @@ from typing import List
 IdList = List[str]
 
 
-def get_participants_commpass_ids_in_one_page(participation_table_list) -> List[str]:
-    """1ページ内のテーブルからcommpassユーザidを取得し、リストを作成する
+def get_participants_connpass_ids_in_one_page(participation_table_list) -> List[str]:
+    """1ページ内のテーブルからconnpassユーザidを取得し、リストを作成する
 
     Args:
         participation_table_list ([type]): BeautifulSoupのオブジェクト。ルートにテーブルを持っている
 
     Returns:
-        IdList: ページ内のcommpassユーザidのリスト
+        IdList: ページ内のconnpassユーザidのリスト
     """
-    commpass_id_list = []
+    connpass_id_list = []
     for participating_user in participation_table_list.select('.user'):
         user_url = participating_user.select('.display_name a')[0]['href']
         m = re.match('https://connpass.com/user/(.*)/',
                      user_url)  # ユーザページのリンクからidを取得
-        commpass_id_list.append(m.group(1).replace(
+        connpass_id_list.append(m.group(1).replace(
             "/open", ""))  # イベント関係者の場合、リンクに/openがつくので除去
 
-    return commpass_id_list
+    return connpass_id_list
 
 
 def get_participants_twitter_ids_in_one_page(participation_table_list) -> List[str]:
@@ -70,7 +70,7 @@ def get_participants_id_list(event_url: str, service: str = "twitter", exclude_c
 
     # ユーザidを取得したいサービスの関数を選択
     if service == "twitter":
-        get_id_func = get_participants_commpass_ids_in_one_page
+        get_id_func = get_participants_connpass_ids_in_one_page
     elif service == "connpass":
         get_id_func = get_participants_twitter_ids_in_one_page
     else:
