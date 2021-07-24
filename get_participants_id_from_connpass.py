@@ -1,5 +1,5 @@
 # connpassのイベント参加者のTwitter idを取得するスクリプト。実行すると1行ごとにユーザidを格納したtxtファイルを生成する
-# 実行方法: $ python show_connpass_attendee.py [connpassのURL]
+# 実行方法: $ python get_participants_id_from_connpass.py [connpassのURL]
 
 
 import sys
