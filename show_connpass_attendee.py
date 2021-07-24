@@ -25,7 +25,11 @@ def get_participants_connpass_ids_in_one_page(participation_table_list) -> List[
     """
     connpass_id_list = []
     for participating_user in participation_table_list.select('.user'):
-        user_url = participating_user.select('.display_name a')[0]['href']
+        user = participating_user.select('.display_name a')
+        # 退会ユーザーの場合は弾く
+        if user == []:
+            continue
+        user_url = user[0]['href']
         m = re.match('https://connpass.com/user/(.*)/',
                      user_url)  # ユーザページのリンクからidを取得
         connpass_id_list.append(m.group(1).replace(
