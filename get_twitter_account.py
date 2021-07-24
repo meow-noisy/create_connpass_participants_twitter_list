@@ -1,22 +1,37 @@
 # ユーザのアカウントページからtwitter urlを取得
+
+import sys
+
 import requests
 from bs4 import BeautifulSoup
 import re
 
-prog = re.compile("http://twitter.com/*")
+prog = re.compile("http://twitter.com/(.*)/?")
 
-# 自分のurlで試験
-url = "https://connpass.com/user/meow_noisy/"
 
-r = requests.get(url)
+def get_twitter_account(commpass_user_page_url):
 
-soup = BeautifulSoup(r.text, 'html.parser')
+    r = requests.get(commpass_user_page_url)
 
-social_links = soup.select('.social_link a')
+    soup = BeautifulSoup(r.text, 'html.parser')
 
-for link in social_links:
-    url = link["href"]
+    social_links = soup.select('.social_link a')
 
-    m = prog.match(url)
-    if m:
-        print(url)
+    for link in social_links:
+        url = link["href"]
+
+        m = prog.match(url)
+        if m:
+            print(url)
+            return m.group(1)
+
+
+if __name__ == "__main__":
+    # 自分のurlで試験
+    # url = "https://connpass.com/user/meow_noisy/"
+
+    url = sys.argv[1]
+
+    account = get_twitter_account(url)
+
+    print(account)
