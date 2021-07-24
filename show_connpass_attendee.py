@@ -39,7 +39,14 @@ def get_participants_connpass_ids_in_one_page(participation_table_list) -> List[
 
 
 def get_participants_twitter_ids_in_one_page(participation_table_list) -> List[str]:
+    """1ページ内のテーブルからtwitterユーザidを取得し、リストを作成する
 
+    Args:
+        participation_table_list ([type]): BeautifulSoupのオブジェクト。ルートにテーブルを持っている
+
+    Returns:
+        IdList: ページ内のtwitterユーザidのリスト
+    """
     twitter_id_list = []
 
     for participating_user in participation_table_list.select('.social'):
@@ -60,6 +67,8 @@ def get_participants_id_list(event_url: str, service: str = "twitter", exclude_c
     """イベント参加予定者のユーザidのリストを取得
     Args:
         event_url (str): イベントページのURL
+        service (str, optional): ユーザを取得したいサービス。twitterかconnpassが選べる Defaults to "twitter".
+        exclude_cancel (bool, optional): Trueの場合、イベントをキャンセルしたユーザをリストに含めないようにする. Defaults to False.
     Returns:
         IdList: ユーザidのリスト
     """
