@@ -70,9 +70,9 @@ def get_participants_id_list(event_url: str, service: str = "twitter", exclude_c
 
     # ユーザidを取得したいサービスの関数を選択
     if service == "twitter":
-        get_id_func = get_participants_connpass_ids_in_one_page
-    elif service == "connpass":
         get_id_func = get_participants_twitter_ids_in_one_page
+    elif service == "connpass":
+        get_id_func = get_participants_connpass_ids_in_one_page
     else:
         raise ValueError(f"{service} is not unsupported.")
 
