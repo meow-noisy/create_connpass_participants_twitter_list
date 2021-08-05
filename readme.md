@@ -1,7 +1,7 @@
 # connpassのイベント参加者のTwitter idを収集し、Twitterリストを作成するPythonスクリプト
 
 ## セットアップ
-- Twitter APIの利用申請が受理される
+- Twitter APIの利用申請を行い、受理される
 - Twitter APIのTokenを発行する
     - Twitter APIトークン発行時にはWrite権限を付与しておく必要があることに注意
 - 必要なパッケージをインストール
